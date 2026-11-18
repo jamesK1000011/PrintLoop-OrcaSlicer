@@ -1,0 +1,89 @@
+{
+ "about": "Spike step 4, part 1: the fiducial L-bracket in FreeCAD through Agent Link. Run as batch { file: <this file> } (rollback on). Paths are relative to the session folder.",
+ "calls": [
+  {
+   "tool": "doc_new",
+   "arguments": {
+    "name": "fiducial_L"
+   }
+  },
+  {
+   "tool": "part_primitive",
+   "arguments": {
+    "kind": "box",
+    "size": [
+     40,
+     15,
+     4
+    ],
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "name": "Base"
+   }
+  },
+  {
+   "tool": "part_primitive",
+   "arguments": {
+    "kind": "box",
+    "size": [
+     6,
+     15,
+     29
+    ],
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "name": "Upright"
+   }
+  },
+  {
+   "tool": "part_primitive",
+   "arguments": {
+    "kind": "box",
+    "size": [
+     8,
+     6,
+     4
+    ],
+    "at": [
+     30,
+     15,
+     0
+    ],
+    "name": "Tab"
+   }
+  },
+  {
+   "tool": "part_boolean",
+   "arguments": {
+    "op": "fuse",
+    "base": "Base",
+    "tools": [
+     "Upright",
+     "Tab"
+    ],
+    "name": "fiducial_L"
+   }
+  },
+  {
+   "tool": "export",
+   "arguments": {
+    "objects": "fiducial_L",
+    "path": "printloop/fiducial_L.stl"
+   }
+  },
+  {
+   "tool": "doc_save",
+   "arguments": {
+    "path": "printloop/fiducial_L"
+   }
+  }
+ ],
+ "rollback": true,
+ "stopOnError": true
+}

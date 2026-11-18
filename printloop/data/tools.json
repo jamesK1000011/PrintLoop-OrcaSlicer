@@ -1,0 +1,235 @@
+{
+ "schema": "printloop.tools/1",
+ "version": 1,
+ "tools": [
+  {
+   "name": "print_score",
+   "description": "Score the defect risk of a sliced plate before a print. Give path: a sliced .3mf (.gcode.3mf) or a .gcode file. A relative path is in the output folder. plate: the plate number, from 1. The default is 1. The tool reads the G-code with gcode_read's reader and scores five domains: stringing, overhang, warp, thermal and collision. Each domain has a score from 0 to 100 and hot spots (layer, z, xy, risk, why). The overall score is the lowest domain score. CRITICAL means that one layer risk is 0.8 or more. collision needs context (PrintContext from FreeCAD) with aligned true. Otherwise its status is unaligned or no_context. baseline: an earlier report (a path, or run_id/n). Then each score has a delta. printer and filament: names that select learned values. The tool changes nothing. It never starts a print. The scores are a risk estimate. They are not a sign-off.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "path": {
+      "type": "string"
+     },
+     "plate": {
+      "type": "integer",
+      "minimum": 1
+     },
+     "context": {
+      "type": [
+       "object",
+       "string"
+      ],
+      "description": "PrintContext from FreeCAD, or the path of its JSON file."
+     },
+     "baseline": {
+      "type": "string"
+     },
+     "printer": {
+      "type": "string"
+     },
+     "filament": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "path"
+    ],
+    "additionalProperties": false
+   },
+   "group": "printloop",
+   "source": "design v2 §16.2; descriptions in ASD-STE100",
+   "date": "2026-11-18"
+  },
+  {
+   "name": "print_loop",
+   "description": "Improve a slice in a loop: slice, score, change one family of settings, slice again. The loop works on run copies in ~/AgentLink/printloop/runs. It does not change the original project. action start: give path (an OrcaSlicer project, .3mf), plate, context, dial (0 to 3), printer and filament. dial 0 stops before each iteration. dial 1 changes settings without a stop and stops before a CAD edit. dial 2 and 3 do not stop. Caps: 4 slicer passes and 2 CAD passes. action step: continue the run. After a CAD edit in FreeCAD, give path (the changed project). action status: read the run state. action stop: stop the run. The answer is RunState: state, iteration, caps, used, history and gate. When state is input_required or escalated, show the gate to the person. The person approves it with print_approve. The loop never starts a print. It never writes the person's presets.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "action": {
+      "type": "string",
+      "enum": [
+       "start",
+       "step",
+       "status",
+       "stop",
+       "approve",
+       "reject"
+      ]
+     },
+     "run_id": {
+      "type": "string"
+     },
+     "path": {
+      "type": "string"
+     },
+     "plate": {
+      "type": "integer",
+      "minimum": 1
+     },
+     "context": {
+      "type": [
+       "object",
+       "string"
+      ],
+      "description": "PrintContext from FreeCAD, or the path of its JSON file."
+     },
+     "dial": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 3
+     },
+     "printer": {
+      "type": "string"
+     },
+     "filament": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "action"
+    ],
+    "additionalProperties": false
+   },
+   "group": "printloop",
+   "source": "design v2 §16.2; descriptions in ASD-STE100",
+   "date": "2026-11-18"
+  },
+  {
+   "name": "print_approve",
+   "description": "Approve or reject the open gate of a print_loop run. Use this tool only after the person says yes in the chat, or presses Go in the Agent Link panel. Set this tool to ask first in your client. Give run_id, gate_id and token. token is the 4 characters in token_hint, as the person typed or confirmed them. decision: approve (the default) or reject. A wrong token, a token older than 24 h or a closed gate is refused with code gated. The answer is the RunState after the decision.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "run_id": {
+      "type": "string"
+     },
+     "gate_id": {
+      "type": "string"
+     },
+     "token": {
+      "type": "string"
+     },
+     "decision": {
+      "type": "string",
+      "enum": [
+       "approve",
+       "reject"
+      ]
+     }
+    },
+    "required": [
+     "run_id",
+     "gate_id"
+    ],
+    "additionalProperties": false
+   },
+   "group": "printloop",
+   "source": "design v2 §16.2; descriptions in ASD-STE100",
+   "date": "2026-11-18"
+  },
+  {
+   "name": "printer",
+   "description": "Printer connection (read only). It is not available yet: spike step 8 and later. Each call is refused with code unavailable. PrintLoop never starts a print and never sends a command to a printer.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "action": {
+      "type": "string",
+      "enum": [
+       "list",
+       "add",
+       "remove",
+       "capabilities",
+       "telemetry",
+       "events",
+       "snapshot"
+      ]
+     },
+     "printer_id": {
+      "type": "string"
+     },
+     "driver": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "action"
+    ],
+    "additionalProperties": false
+   },
+   "group": "printloop",
+   "source": "design v2 §16.2; descriptions in ASD-STE100",
+   "date": "2026-11-18"
+  },
+  {
+   "name": "print_watch",
+   "description": "Watch a print that the person started. It is not available yet: spike step 8 and later. Each call is refused with code unavailable. This tool never starts a print.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "action": {
+      "type": "string",
+      "enum": [
+       "start",
+       "stop",
+       "status"
+      ]
+     },
+     "printer_id": {
+      "type": "string"
+     },
+     "path": {
+      "type": "string"
+     },
+     "plate": {
+      "type": "integer"
+     },
+     "run_id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "action"
+    ],
+    "additionalProperties": false
+   },
+   "group": "printloop",
+   "source": "design v2 §16.2; descriptions in ASD-STE100",
+   "date": "2026-11-18"
+  },
+  {
+   "name": "calib",
+   "description": "Calibration values learned per printer and filament. It is not available yet: spike step 9. Each call is refused with code unavailable.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "action": {
+      "type": "string",
+      "enum": [
+       "get",
+       "propose",
+       "record",
+       "explain",
+       "reset"
+      ]
+     },
+     "printer_id": {
+      "type": "string"
+     },
+     "filament": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "action"
+    ],
+    "additionalProperties": false
+   },
+   "group": "printloop",
+   "source": "design v2 §16.2; descriptions in ASD-STE100",
+   "date": "2026-11-18"
+  }
+ ]
+}
