@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "printloop.score_report/1",
+  "title": "PrintLoop ScoreReport (design v2 §16.3)",
+  "x-source": "design v2 §16.3",
+  "x-date": "2026-11-18",
+  "type": "object",
+  "required": ["schema", "report_id", "run_id", "iteration", "source", "printer", "filament", "overall", "domains", "orca_warnings", "inputs", "timing_ms"],
+  "properties": {
+    "schema": {"const": "printloop.score_report/1"},
+    "report_id": {"type": "string", "minLength": 26, "maxLength": 26},
+    "run_id": {"type": ["string", "null"]},
+    "iteration": {"type": "integer", "minimum": 0},
+    "source": {
+      "type": "object",
+      "required": ["path", "plate", "gcode_sha256", "dialect", "arcs", "orca_version"],
+      "properties": {
+        "path": {"type": "string"},
+        "plate": {"type": "integer", "minimum": 1},
+        "gcode_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "dialect": {"enum": ["bbl", "prusa", null]},
+        "arcs": {"type": "boolean"},
+        "orca_version": {"type": ["string", "null"]},
+        "md5": {"type": ["boolean", "null"]}
+      }
+    },
+    "printer": {"type": ["string", "null"]},
+    "filament": {"type": ["string", "null"]},
+    "overall": {
+      "type": "object",
+      "required": ["score", "critical", "delta"],
+      "properties": {
+        "score": {"type": "integer", "minimum": 0, "maximum": 100},
+        "critical": {"type": "boolean"},
+        "delta": {"type": ["number", "null"]}
+      }
+    },
+    "domains": {
+      "type": "object",
+      "required": ["stringing", "overhang", "warp", "thermal", "collision"],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^(stringing|overhang|warp|thermal|collision)$": {
+          "type": "object",
+          "required": ["score", "delta", "critical", "status", "p95_risk", "max_risk", "hot_spots"],
+          "properties": {
+            "score": {"type": ["integer", "null"], "minimum": 0, "maximum": 100},
+            "delta": {"type": ["number", "null"]},
+            "critical": {"type": "boolean"},
+            "status": {"enum": ["ok", "unaligned", "no_context", "skipped"]},
+            "p95_risk": {"type": "number", "minimum": 0, "maximum": 1},
+            "max_risk": {"type": "number", "minimum": 0, "maximum": 1},
+            "hot_spots": {
+              "type": "array",
+              "maxItems": 20,
+              "items": {
+                "type": "object",
+                "required": ["layer", "z", "xy", "model_xyz", "risk", "why"],
+                "properties": {
+                  "layer": {"type": "integer", "minimum": 1},
+                  "z": {"type": "number"},
+                  "xy": {"type": "array", "items": {"type": "number"}, "minItems": 2, "maxItems": 2},
+                  "model_xyz": {"anyOf": [{"type": "null"}, {"type": "array", "items": {"type": "number"}, "minItems": 3, "maxItems": 3}]},
+                  "risk": {"type": "number", "minimum": 0, "maximum": 1},
+                  "why": {"type": "string"}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "orca_warnings": {"type": "array", "items": {"type": "object", "required": ["level", "code", "msg"]}},
+    "inputs": {
+      "type": "object",
+      "required": ["params_source"],
+      "properties": {"params_source": {"type": "object", "required": ["calib", "defaults"], "properties": {"calib": {"type": "boolean"}, "defaults": {"type": "boolean"}}}}
+    },
+    "timing_ms": {"type": "integer", "minimum": 0}
+  }
+}

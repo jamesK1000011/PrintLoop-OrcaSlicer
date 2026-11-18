@@ -1,0 +1,13 @@
+# Raster images (screenshots, renders) a person or agent has looked at and
+# found free of personal data. One line each: "<sha256> <path>".
+# Add a line only after looking at the image itself.
+1da9ed6463cf32e05c7c75899eddb73d4ffbe55410aa000eb202f4cd5f6d0379 tests/fixtures/mac/cube_overhang_h2d.gcode.3mf!Metadata/plate_1.png
+bf543eca403ef850f66748acfea03a56839de9e4a6d9fa9eedde037937a1cf83 tests/fixtures/mac/cube_overhang_h2d.gcode.3mf!Metadata/plate_1_small.png
+0f1d7a1fc6f923b8016e6ca68d1362e1331af024ea92f34207a043d3037e1f88 tests/fixtures/mac/cube_overhang_h2d.gcode.3mf!Metadata/plate_no_light_1.png
+b12ee0e75a9afc6b51eb04b4977ec53169b9a6c5ce7cee99335667344af52644 tests/fixtures/mac/cube_overhang_h2d.gcode.3mf!Metadata/top_1.png
+b8fb3b3f08e7452bd1eddb5f1ee877a0e94809ffb56f3bfb86661d8929fa9387 tests/fixtures/mac/cube_overhang_h2d.gcode.3mf!Metadata/pick_1.png
+1da9ed6463cf32e05c7c75899eddb73d4ffbe55410aa000eb202f4cd5f6d0379 tests/fixtures/mac/cube_overhang_prusa.gcode.3mf!Metadata/plate_1.png
+bf543eca403ef850f66748acfea03a56839de9e4a6d9fa9eedde037937a1cf83 tests/fixtures/mac/cube_overhang_prusa.gcode.3mf!Metadata/plate_1_small.png
+0f1d7a1fc6f923b8016e6ca68d1362e1331af024ea92f34207a043d3037e1f88 tests/fixtures/mac/cube_overhang_prusa.gcode.3mf!Metadata/plate_no_light_1.png
+b73c5713f7d5a3d4b70fd9f70b70b10e8e89278c4b2d52fcce42ef38becee363 tests/fixtures/mac/cube_overhang_prusa.gcode.3mf!Metadata/top_1.png
+94e9ae139e82a6937440abbd46964ec6b6842440e0ff10db61f3ed5e4c650ab1 tests/fixtures/mac/cube_overhang_prusa.gcode.3mf!Metadata/pick_1.png

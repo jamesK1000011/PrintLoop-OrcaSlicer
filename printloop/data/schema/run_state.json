@@ -1,0 +1,143 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "printloop.run_state/1",
+ "title": "RunState (design v2 §16.3)",
+ "x-source": "design v2 §16.3; gate approval by print_approve (§17)",
+ "x-date": "2026-11-18",
+ "type": "object",
+ "required": [
+  "run_id",
+  "state",
+  "dial",
+  "iteration",
+  "caps",
+  "used",
+  "history",
+  "gate",
+  "exit_reason"
+ ],
+ "properties": {
+  "run_id": {
+   "type": "string"
+  },
+  "state": {
+   "enum": [
+    "running",
+    "input_required",
+    "done",
+    "escalated",
+    "stopped"
+   ]
+  },
+  "dial": {
+   "type": "integer",
+   "minimum": 0,
+   "maximum": 3
+  },
+  "iteration": {
+   "type": "integer",
+   "minimum": 0
+  },
+  "caps": {
+   "type": "object",
+   "required": [
+    "slicer",
+    "cad"
+   ],
+   "properties": {
+    "slicer": {
+     "type": "integer"
+    },
+    "cad": {
+     "type": "integer"
+    }
+   }
+  },
+  "used": {
+   "type": "object",
+   "required": [
+    "slicer",
+    "cad"
+   ],
+   "properties": {
+    "slicer": {
+     "type": "integer"
+    },
+    "cad": {
+     "type": "integer"
+    }
+   }
+  },
+  "history": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "n",
+     "report_id",
+     "overall",
+     "changed"
+    ],
+    "properties": {
+     "n": {
+      "type": "integer"
+     },
+     "report_id": {
+      "type": "string"
+     },
+     "overall": {
+      "type": "integer"
+     },
+     "changed": {
+      "type": [
+       "object",
+       "null"
+      ]
+     }
+    }
+   }
+  },
+  "gate": {
+   "anyOf": [
+    {
+     "type": "null"
+    },
+    {
+     "type": "object",
+     "required": [
+      "gate_id",
+      "kind",
+      "proposal",
+      "token_hint"
+     ],
+     "properties": {
+      "gate_id": {
+       "type": "string"
+      },
+      "kind": {
+       "enum": [
+        "slicer_step",
+        "cad_edit",
+        "preset_write",
+        "cap_exhausted",
+        "calib_reset"
+       ]
+      },
+      "proposal": {
+       "type": "object"
+      },
+      "token_hint": {
+       "type": "string"
+      }
+     }
+    }
+   ]
+  },
+  "exit_reason": {
+   "type": [
+    "string",
+    "null"
+   ]
+  }
+ }
+}

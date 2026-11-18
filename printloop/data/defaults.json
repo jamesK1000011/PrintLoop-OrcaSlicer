@@ -1,0 +1,220 @@
+{
+ "schema": "printloop.defaults/1",
+ "version": 1,
+ "seeds": {
+  "score.p95": {
+   "value": 0.95,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15",
+   "note": "the percentile of layer risks"
+  },
+  "score.max_weight": {
+   "value": 0.5,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15",
+   "note": "score = 100 x (1 - max(p95, max_weight x max))"
+  },
+  "score.critical": {
+   "value": 0.8,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15",
+   "note": "a layer risk at or above this is CRITICAL"
+  },
+  "stringing.D0": {
+   "value": 2.0,
+   "unit": "mm",
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15"
+  },
+  "stringing.S": {
+   "value": 1.0,
+   "unit": "mm",
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15"
+  },
+  "stringing.d_open_min": {
+   "value": 0.5,
+   "unit": "mm",
+   "source": "printloop change 2026-11-18, recorded in docs/design.md §17",
+   "date": "2026-11-18",
+   "note": "an open-air travel shorter than this adds no risk: with the plain sigmoid every short travel added about 0.04 and a normal layer scored as stringy"
+  },
+  "stringing.k_retract": {
+   "value": 0.35,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15"
+  },
+  "stringing.k_wipe": {
+   "value": 0.8,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15"
+  },
+  "stringing.k_zhop": {
+   "value": 1.1,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15"
+  },
+  "stringing.k_temp": {
+   "value": 0.5,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15",
+   "note": "weight of a set temperature above the middle of the filament range"
+  },
+  "overhang.V_ref_default": {
+   "value": 30.0,
+   "unit": "mm/s",
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15",
+   "note": "used when the profile has no overhang_3_4_speed"
+  },
+  "overhang.fan_weight": {
+   "value": 0.5,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15"
+  },
+  "overhang.L0": {
+   "value": 10.0,
+   "unit": "mm",
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15"
+  },
+  "overhang.p": {
+   "value": 0.9,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15",
+   "note": "length-weighted percentile per layer"
+  },
+  "overhang.v_clamp_lo": {
+   "value": 0.5,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15"
+  },
+  "overhang.v_clamp_hi": {
+   "value": 2.0,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15"
+  },
+  "warp.w_a": {
+   "value": 0.4,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15"
+  },
+  "warp.w_c": {
+   "value": 0.3,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15"
+  },
+  "warp.w_f": {
+   "value": 0.3,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15"
+  },
+  "warp.aspect_div": {
+   "value": 3.0,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15"
+  },
+  "warp.corner_deg": {
+   "value": 90.0,
+   "unit": "degrees",
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15"
+  },
+  "warp.corner_norm": {
+   "value": 8.0,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15"
+  },
+  "warp.brim_factor": {
+   "value": 0.6,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15"
+  },
+  "warp.layers": {
+   "value": 3,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15",
+   "note": "the first layers that carry the part-level risk"
+  },
+  "thermal.flow_start": {
+   "value": 0.9,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15",
+   "note": "risk starts at this fraction of Q_max"
+  },
+  "thermal.flow_span": {
+   "value": 0.2,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15",
+   "note": "risk is 1 at flow_start + flow_span of Q_max"
+  },
+  "collision.r0_widths": {
+   "value": 2.0,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15",
+   "note": "r0 = this x line width"
+  },
+  "collision.speed_step": {
+   "value": 50.0,
+   "unit": "mm/s",
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15"
+  },
+  "collision.speed_window": {
+   "value": 2.0,
+   "unit": "mm",
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15"
+  },
+  "report.hot_spots": {
+   "value": 20,
+   "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+   "date": "2026-11-15",
+   "note": "hot spots per domain, highest risk first"
+  },
+  "geom.arc_chord_mm": {
+   "value": 0.05,
+   "unit": "mm",
+   "source": "printloop change 2026-11-18, recorded in docs/design.md §17",
+   "date": "2026-11-18",
+   "note": "arc chord error; also at most 2% of the radius, so a small arc keeps its length within 1%; the acceptance limit is 0.1 mm"
+  },
+  "geom.sample_mm": {
+   "value": 0.1,
+   "unit": "mm",
+   "source": "printloop change 2026-11-18, recorded in docs/design.md §17",
+   "date": "2026-11-18",
+   "note": "sample step of the pure-Python polygon fallback"
+  }
+ },
+ "shrink": {
+  "source": "design v2 §16.4 seed (a starting point, not a literature value)",
+  "date": "2026-11-15",
+  "classes": {
+   "PLA": 0.2,
+   "TPU": 0.2,
+   "PVA": 0.2,
+   "PETG": 0.4,
+   "PCTG": 0.4,
+   "ABS": 0.8,
+   "ASA": 0.8,
+   "HIPS": 0.8,
+   "PC": 1.0,
+   "PA": 1.0,
+   "PA-CF": 1.0,
+   "PPS": 1.0
+  },
+  "unknown": 0.5
+ },
+ "filament_fallback": {
+  "source": "OrcaSlicer generic filament defaults (orcalink/data/orca-options.json defaults) where the profile gives no value",
+  "date": "2026-11-18",
+  "values": {
+   "nozzle_temperature_range_low": 190,
+   "nozzle_temperature_range_high": 240,
+   "filament_max_volumetric_speed": 12.0,
+   "slow_down_layer_time": 8.0,
+   "filament_type": "PLA"
+  }
+ }
+}

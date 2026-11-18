@@ -1,0 +1,133 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "printloop.print_context/1",
+ "title": "PrintContext (design v2 §16.3), from FreeCAD; any part may be empty",
+ "x-source": "design v2 §16.3",
+ "x-date": "2026-11-18",
+ "type": "object",
+ "properties": {
+  "body": {
+   "type": "string"
+  },
+  "orca_object": {
+   "type": "string"
+  },
+  "doc": {
+   "type": "string"
+  },
+  "export_placement": {
+   "type": "object",
+   "properties": {
+    "matrix4": {
+     "type": "array",
+     "items": {
+      "type": "number"
+     },
+     "minItems": 16,
+     "maxItems": 16
+    },
+    "units": {
+     "const": "mm"
+    }
+   }
+  },
+  "bbox": {
+   "type": "object",
+   "properties": {
+    "min": {
+     "type": "array",
+     "items": {
+      "type": "number"
+     },
+     "minItems": 3,
+     "maxItems": 3
+    },
+    "max": {
+     "type": "array",
+     "items": {
+      "type": "number"
+     },
+     "minItems": 3,
+     "maxItems": 3
+    }
+   }
+  },
+  "keepout_faces": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "face"
+    ],
+    "properties": {
+     "face": {
+      "type": "string"
+     },
+     "reason": {
+      "enum": [
+       "fit",
+       "note",
+       "tolerance"
+      ]
+     },
+     "tol_mm": {
+      "type": "number"
+     },
+     "samples": {
+      "type": "array",
+      "items": {
+       "type": "array",
+       "items": {
+        "type": "number"
+       },
+       "minItems": 3,
+       "maxItems": 3
+      }
+     }
+    }
+   }
+  },
+  "stress": {
+   "type": "object",
+   "properties": {
+    "study": {
+     "type": "string"
+    },
+    "max_vm_mpa": {
+     "type": "number"
+    },
+    "peaks": {
+     "type": "array",
+     "maxItems": 200,
+     "items": {
+      "type": "object",
+      "required": [
+       "xyz"
+      ],
+      "properties": {
+       "xyz": {
+        "type": "array",
+        "items": {
+         "type": "number"
+        },
+        "minItems": 3,
+        "maxItems": 3
+       },
+       "vm_mpa": {
+        "type": "number"
+       },
+       "ratio": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+       }
+      }
+     }
+    }
+   }
+  },
+  "aligned": {
+   "type": "boolean"
+  }
+ }
+}

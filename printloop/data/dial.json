@@ -1,0 +1,70 @@
+{
+ "schema": "printloop.dial/1",
+ "version": 1,
+ "source": "design v2 §16.5.1 (caps are placeholders, D4)",
+ "date": "2026-11-15",
+ "default": 1,
+ "levels": {
+  "0": {
+   "name": "Manual",
+   "slicer": "gate",
+   "cad": "gate",
+   "persist": "gate",
+   "caps": {
+    "slicer": 4,
+    "cad": 2
+   }
+  },
+  "1": {
+   "name": "Guarded",
+   "slicer": "auto",
+   "cad": "gate",
+   "persist": "gate",
+   "caps": {
+    "slicer": 4,
+    "cad": 2
+   }
+  },
+  "2": {
+   "name": "Trusted",
+   "slicer": "auto",
+   "cad": "auto",
+   "persist": "gate",
+   "caps": {
+    "slicer": 4,
+    "cad": 2
+   }
+  },
+  "3": {
+   "name": "Full auto",
+   "slicer": "auto",
+   "cad": "auto",
+   "persist": "auto",
+   "caps": {
+    "slicer": 4,
+    "cad": 2
+   }
+  }
+ },
+ "always_gated": [
+  "print_start",
+  "preset_write",
+  "keepout_edit",
+  "calib_reset",
+  "secrets"
+ ],
+ "gate": {
+  "token_chars": 4,
+  "token_max_age_s": 86400,
+  "source": "design v2 §16.5.2",
+  "date": "2026-11-15"
+ },
+ "exit": {
+  "plateau_window": 2,
+  "plateau_delta": 2,
+  "clean_score": 90,
+  "regression_delta": -3,
+  "source": "design v2 §16.5.4",
+  "date": "2026-11-15"
+ }
+}

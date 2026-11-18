@@ -1,0 +1,56 @@
+{
+  "schema": "printloop.dialects/1",
+  "version": 1,
+  "note": "G-code comment tags per dialect. Each entry has a source and a date. Spike step 2 confirms the bbl tags against a real H2D slice: until then the bbl entries are 'unverified'.",
+  "dialects": {
+    "bbl": {
+      "name": "Bambu (OrcaSlicer and Bambu Studio for Bambu printers)",
+      "status": "unverified",
+      "source": "design v2 §4 (research pass); orcalink/gcode_view.py regexes",
+      "date": "2026-11-15",
+      "detect": ["^; FEATURE:", "^; CHANGE_LAYER", "^; Z_HEIGHT:"],
+      "tags": {
+        "feature": "^;\\s*FEATURE\\s*:\\s*(.+?)\\s*$",
+        "layer_change": "^;\\s*CHANGE_LAYER\\s*$",
+        "z": "^;\\s*Z_HEIGHT\\s*:\\s*([\\d.]+)",
+        "height": "^;\\s*LAYER_HEIGHT\\s*:\\s*([\\d.]+)",
+        "width": "^;\\s*LINE_WIDTH\\s*:\\s*([\\d.]+)"
+      }
+    },
+    "prusa": {
+      "name": "Non-Bambu printers (OrcaSlicer and PrusaSlicer style)",
+      "status": "unverified",
+      "source": "design v2 §4 (research pass); orcalink/gcode_view.py regexes",
+      "date": "2026-11-15",
+      "detect": ["^;TYPE:", "^;LAYER_CHANGE", "^;Z:"],
+      "tags": {
+        "feature": "^;\\s*TYPE\\s*:\\s*(.+?)\\s*$",
+        "layer_change": "^;\\s*LAYER_CHANGE\\s*$",
+        "z": "^;\\s*Z\\s*:\\s*([\\d.]+)",
+        "height": "^;\\s*HEIGHT\\s*:\\s*([\\d.]+)",
+        "width": "^;\\s*WIDTH\\s*:\\s*([\\d.]+)"
+      }
+    }
+  },
+  "features": {
+    "source": "OrcaSlicer 2.5 feature names (ExtrusionRole names); PrusaSlicer names for the prusa dialect. Unverified until spike step 2.",
+    "date": "2026-11-18",
+    "canonical": {
+      "Outer wall": ["Outer wall", "External perimeter", "outer_wall"],
+      "Inner wall": ["Inner wall", "Perimeter"],
+      "Overhang wall": ["Overhang wall", "Overhang perimeter"],
+      "Sparse infill": ["Sparse infill", "Internal infill"],
+      "Internal solid infill": ["Internal solid infill", "Solid infill"],
+      "Top surface": ["Top surface", "Top solid infill"],
+      "Bottom surface": ["Bottom surface"],
+      "Bridge": ["Bridge", "Bridge infill"],
+      "Internal Bridge": ["Internal Bridge", "Internal bridge"],
+      "Gap infill": ["Gap infill", "Gap fill"],
+      "Support": ["Support", "Support material"],
+      "Support interface": ["Support interface", "Support material interface"],
+      "Skirt": ["Skirt", "Skirt/Brim"],
+      "Brim": ["Brim"],
+      "Prime tower": ["Prime tower", "Wipe tower"]
+    }
+  }
+}

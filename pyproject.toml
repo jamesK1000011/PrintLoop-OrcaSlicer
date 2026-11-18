@@ -1,0 +1,20 @@
+[project]
+name = "printloop-orcaslicer"
+version = "0.1.0"
+description = "PrintLoop for OrcaSlicer: score the defect risk of a sliced plate and improve the next slice (an OrcaSlicer Agent Link add-on)."
+license = "AGPL-3.0-only"
+requires-python = ">=3.9"
+# orcalink (OrcaSlicer Agent Link) is found beside this repository or on ORCALINK_PATH.
+dependencies = ["shapely>=2"]
+
+[project.optional-dependencies]
+bambu = ["paho-mqtt>=2"]
+moonraker = ["websockets"]
+kin = ["pyGCodeDecode"]
+test = ["pytest"]
+
+[tool.setuptools.packages.find]
+include = ["printloop*"]
+
+[tool.setuptools.package-data]
+printloop = ["data/*.json", "data/schema/*.json"]

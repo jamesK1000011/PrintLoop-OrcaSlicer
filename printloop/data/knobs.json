@@ -1,0 +1,260 @@
+{
+ "schema": "printloop.knobs/1",
+ "version": 1,
+ "note": "Families in table order. Each step is one change on the run copy; a family is tried once per run. Bounds come from orcalink/data/orca-options.json and the filament temperature range.",
+ "families": [
+  {
+   "family": "retraction",
+   "keys": [
+    "retraction_length",
+    "retraction_speed",
+    "wipe",
+    "wipe_distance",
+    "z_hop",
+    "z_hop_types"
+   ],
+   "steps": [
+    {
+     "op": "add",
+     "key": "retraction_length",
+     "by": 0.2,
+     "unit": "mm"
+    },
+    {
+     "op": "set",
+     "key": "wipe",
+     "to": true
+    }
+   ],
+   "triggered_by": [
+    "stringing"
+   ],
+   "source": "design v2 §16.5.3",
+   "date": "2026-11-15"
+  },
+  {
+   "family": "travel",
+   "keys": [
+    "reduce_crossing_wall",
+    "max_travel_detour_distance",
+    "travel_speed"
+   ],
+   "steps": [
+    {
+     "op": "set",
+     "key": "reduce_crossing_wall",
+     "to": true
+    },
+    {
+     "op": "scale",
+     "key": "max_travel_detour_distance",
+     "by": 1.5,
+     "default": 0
+    }
+   ],
+   "triggered_by": [
+    "stringing"
+   ],
+   "source": "design v2 §16.5.3",
+   "date": "2026-11-15"
+  },
+  {
+   "family": "temperature",
+   "keys": [
+    "nozzle_temperature",
+    "nozzle_temperature_initial_layer"
+   ],
+   "steps": [
+    {
+     "op": "add",
+     "key": "nozzle_temperature",
+     "by": -5,
+     "unit": "°C",
+     "floor": "T_lo+5",
+     "raise_for": "thermal"
+    }
+   ],
+   "triggered_by": [
+    "stringing",
+    "thermal"
+   ],
+   "source": "design v2 §16.5.3",
+   "date": "2026-11-15"
+  },
+  {
+   "family": "overhang",
+   "keys": [
+    "enable_overhang_bridge_fan",
+    "overhang_fan_speed",
+    "overhang_1_4_speed",
+    "overhang_2_4_speed",
+    "overhang_3_4_speed",
+    "overhang_4_4_speed",
+    "bridge_speed"
+   ],
+   "steps": [
+    {
+     "op": "set",
+     "key": "enable_overhang_bridge_fan",
+     "to": true
+    },
+    {
+     "op": "add",
+     "key": "overhang_fan_speed",
+     "by": 20,
+     "unit": "%",
+     "max": 100
+    },
+    {
+     "op": "scale",
+     "key": "bridge_speed",
+     "by": 0.8
+    }
+   ],
+   "triggered_by": [
+    "overhang"
+   ],
+   "source": "design v2 §16.5.3",
+   "date": "2026-11-15"
+  },
+  {
+   "family": "cooling",
+   "keys": [
+    "slow_down_layer_time",
+    "slow_down_min_speed",
+    "fan_min_speed",
+    "fan_max_speed",
+    "close_fan_the_first_x_layers"
+   ],
+   "steps": [
+    {
+     "op": "add",
+     "key": "slow_down_layer_time",
+     "by": 2,
+     "unit": "s"
+    },
+    {
+     "op": "set",
+     "key": "close_fan_the_first_x_layers",
+     "to": 3,
+     "when": "shrink>=0.8"
+    }
+   ],
+   "triggered_by": [
+    "thermal",
+    "warp"
+   ],
+   "source": "design v2 §16.5.3",
+   "date": "2026-11-15"
+  },
+  {
+   "family": "adhesion",
+   "keys": [
+    "brim_type",
+    "brim_width",
+    "brim_ears"
+   ],
+   "steps": [
+    {
+     "op": "set",
+     "key": "brim_type",
+     "to": "brim_ears"
+    },
+    {
+     "op": "add",
+     "key": "brim_width",
+     "by": 3,
+     "unit": "mm"
+    }
+   ],
+   "triggered_by": [
+    "warp"
+   ],
+   "source": "design v2 §16.5.3",
+   "date": "2026-11-15"
+  },
+  {
+   "family": "seam",
+   "keys": [
+    "seam_position",
+    "seam_gap"
+   ],
+   "steps": [
+    {
+     "op": "set",
+     "key": "seam_position",
+     "to": "back",
+     "avoid": "collision hot spots"
+    }
+   ],
+   "triggered_by": [
+    "collision"
+   ],
+   "source": "design v2 §16.5.3",
+   "date": "2026-11-15"
+  },
+  {
+   "family": "speed",
+   "keys": [
+    "outer_wall_speed",
+    "outer_wall_acceleration"
+   ],
+   "steps": [
+    {
+     "op": "scale",
+     "key": "outer_wall_speed",
+     "by": 0.85
+    },
+    {
+     "op": "scale",
+     "key": "outer_wall_acceleration",
+     "by": 0.85
+    }
+   ],
+   "triggered_by": [
+    "collision",
+    "overhang"
+   ],
+   "source": "design v2 §16.5.3",
+   "date": "2026-11-15"
+  },
+  {
+   "family": "flow",
+   "keys": [
+    "filament_max_volumetric_speed"
+   ],
+   "steps": [
+    {
+     "op": "scale",
+     "key": "filament_max_volumetric_speed",
+     "by": 0.9,
+     "per_run_only": true
+    }
+   ],
+   "triggered_by": [
+    "thermal"
+   ],
+   "source": "design v2 §16.5.3",
+   "date": "2026-11-15"
+  }
+ ],
+ "cad": {
+  "source": "design v2 §16.5.3 Tier 2",
+  "date": "2026-11-15",
+  "ops": [
+   {
+    "op": "chamfer",
+    "angle_deg": 45,
+    "for": "overhang",
+    "on": "edges bounding faces under overhang hot spots"
+   },
+   {
+    "op": "fillet",
+    "min_mm": 2.0,
+    "for": "warp",
+    "on": "first-layer corners under 90 degrees"
+   }
+  ],
+  "never": "keep-out faces and their edges"
+ }
+}
